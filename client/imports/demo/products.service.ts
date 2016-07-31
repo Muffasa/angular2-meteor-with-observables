@@ -1,14 +1,26 @@
 import { Injectable } from '@angular/core';
 import {ProductsCollection} from "../../../both/collections/products-collection";
-import {MeteorObservable} from "angular2-meteor/dist/index";
+import {MeteorObservable, ObservableMeteorSubscription} from "angular2-meteor";
 import {Product} from "../../../both/models/product-object";
 
 @Injectable()
 export class ProductsService {
+  private productsSubscription : ObservableMeteorSubscription;
+
   constructor() {}
 
   public subscribeProducts() {
-    return MeteorObservable.subscribe("products");
+    if (!this.productsSubscription) {
+      this.productsSubscription = MeteorObservable.subscribe("products");
+    }
+
+    return this.productsSubscription;
+  }
+
+  public unsubscribeProducts() {
+    if (this.productsSubscription) {
+      this.productsSubscription.stop();
+    }
   }
 
   public addProduct(product : Product) {

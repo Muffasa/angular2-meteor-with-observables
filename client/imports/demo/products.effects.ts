@@ -17,6 +17,14 @@ export class ProductsEffects {
     .switchMap(() => this.productsService.subscribeProducts())
     .map(() => ({type: ProductsActions.LOAD_PRODUCTS_FROM_COLLECTION}));
 
+  @Effect() unsubscribeProducts$ = this.updates$
+    .whenAction(ProductsActions.CALL_UNSUBSCRIBE_PRODUCTS)
+    .switchMap(() => {
+      this.productsService.unsubscribeProducts();
+
+      return Observable.of({type: ProductsActions.LOAD_PRODUCTS_FROM_COLLECTION});
+    });
+
   @Effect() loadProducts$ = this.updates$
     .whenAction(ProductsActions.LOAD_PRODUCTS_FROM_COLLECTION)
     .switchMap(() => this.productsService.getProducts())

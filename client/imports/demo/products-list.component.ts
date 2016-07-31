@@ -28,6 +28,10 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
   }
 
   ngOnDestroy() {
+    this.unsubscribe();
+  }
+
+  unsubscribe() {
     this._store.dispatch({ type: ProductsActions.CALL_UNSUBSCRIBE_PRODUCTS });
   }
 

@@ -23,7 +23,7 @@
     "@ngrx/core": "https://registry.npmjs.org/@ngrx/core/-/core-1.0.1.tgz",
     "@ngrx/effects": "https://registry.npmjs.org/@ngrx/effects/-/effects-1.0.1.tgz",
     "@ngrx/store": "https://registry.npmjs.org/@ngrx/store/-/store-2.0.1.tgz",
-    "angular2-meteor": "github:urigo/angular2-meteor#20df9803cac8ee0ad3a4014bd66ed965a5938165",
+    "angular2-meteor": "github:urigo/angular2-meteor#38323037572bd7a2317d209c8e3f74c2ac8fbd29",
     "angular2-meteor-auto-bootstrap": "0.6.0",
     "angular2-meteor-polyfills": "0.1.1",
     "angular2-meteor-tests-polyfills": "0.0.2",
