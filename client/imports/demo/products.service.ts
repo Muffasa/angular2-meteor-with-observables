@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {ProductsCollection} from "../../../both/collections/products-collection";
 import {MeteorObservable, ObservableMeteorSubscription} from "angular2-meteor";
 import {Product} from "../../../both/models/product-object";
-import undefined = Match.undefined;
 
 @Injectable()
 export class ProductsService {
