@@ -22,7 +22,7 @@ export class ProductsEffects {
     .switchMap(() => {
       this.productsService.unsubscribeProducts();
 
-      return Observable.of({type: ProductsActions.LOAD_PRODUCTS_FROM_COLLECTION});
+      return Observable.of({type: ProductsActions.PRODUCTS_COLLECTION_UPDATED});
     });
 
   @Effect() loadProducts$ = this.updates$

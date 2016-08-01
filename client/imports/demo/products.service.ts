@@ -6,6 +6,7 @@ import {Product} from "../../../both/models/product-object";
 @Injectable()
 export class ProductsService {
   private productsSubscription : ObservableMeteorSubscription;
+  private collectionObservable;
 
   constructor() {}
 
@@ -29,6 +30,10 @@ export class ProductsService {
   }
 
   public getProducts() {
-    return ProductsCollection.find({});
+    if (!this.collectionObservable) {
+      this.collectionObservable = ProductsCollection.find({});
+    }
+
+    return this.collectionObservable;
   }
 }

@@ -1,4 +1,4 @@
-import{ Component } from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import { MeteorComponent } from 'angular2-meteor';
 import template from './products-list.component.html';
 import {ProductsService} from "./products.service";
@@ -12,6 +12,7 @@ import {OnInit, OnDestroy} from "@angular/core";
 @Component({
   selector: 'products',
   template,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ProductsService]
 })
 export class ProductsListComponent extends MeteorComponent implements OnInit, OnDestroy {
@@ -21,6 +22,10 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
     super();
 
     this.productsStore = this._store.select("products");
+  }
+
+  a() {
+
   }
 
   ngOnInit() {
