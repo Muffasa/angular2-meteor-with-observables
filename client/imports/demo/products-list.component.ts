@@ -29,7 +29,7 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
   }
 
   ngOnInit() {
-    this._store.dispatch({ type: ProductsActions.CALL_SUBSCRIBE_PRODUCTS });
+    this._store.dispatch({ type: ProductsActions.SUBSCRIBE_PRODUCTS});
   }
 
   ngOnDestroy() {
@@ -37,7 +37,7 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
   }
 
   unsubscribe() {
-    this._store.dispatch({ type: ProductsActions.CALL_UNSUBSCRIBE_PRODUCTS });
+    this._store.dispatch({ type: ProductsActions.UNSUBSCRIBE_PRODUCTS});
   }
 
   add() {
@@ -46,7 +46,7 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
     };
 
     this._store.dispatch({
-      type: ProductsActions.ADD_PRODUCTS,
+      type: ProductsActions.INSERT_PRODUCT,
       payload: product
     });
   }

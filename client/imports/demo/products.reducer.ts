@@ -9,17 +9,17 @@ export interface ProductsState {
 
 export const productsReducer : ActionReducer<ProductsState> = (state : ProductsState, action : Action) => {
     switch (action.type) {
-      case ProductsActions.PRODUCTS_COLLECTION_UPDATED: {
+      case ProductsActions.PRODUCTS_SYNCED: {
         return Object.assign({}, state, { products: action.payload });
       }
 
-      case ProductsActions.ADD_PRODUCT_SUCCESS: {
+      case ProductsActions.INSERT_PRODUCT_SUCCESS: {
         console.log("Created new item:", action.payload);
 
         return state;
       }
 
-      case ProductsActions.ADD_PRODUCT_FAIL: {
+      case ProductsActions.INSERT_PRODUCT_FAIL: {
         console.log("Error creating new item:", action.payload);
 
         return state;
