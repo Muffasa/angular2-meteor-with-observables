@@ -25,9 +25,7 @@ export class ProductsEffects {
       return Observable.of({type: ProductsActions.PRODUCTS_COLLECTION_UPDATED});
     });
 
-  @Effect() loadProducts$ = this.updates$
-    .whenAction(ProductsActions.LOAD_PRODUCTS_FROM_COLLECTION)
-    .switchMap(() => this.productsService.getProducts())
+  @Effect() loadProducts$ =  this.productsService.getProducts()
     .map(products => ({type: ProductsActions.PRODUCTS_COLLECTION_UPDATED, payload: products}));
 
   @Effect() addProduct$ = this.updates$
