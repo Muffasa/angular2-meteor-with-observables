@@ -22,6 +22,15 @@ export class Main {
           throw new Meteor.Error("product name can't be empty");
 
         return ProductsCollection.insert(product);
+      },
+      removeProduct: function (productId) {
+          // TODO: check permissions
+        check(productId, String);
+
+        if (!productId)
+          throw new Meteor.Error("no product id");
+
+        return ProductsCollection.remove(productId);
       }
     })
   }

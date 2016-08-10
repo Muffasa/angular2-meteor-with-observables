@@ -1,13 +1,11 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
-import { MeteorComponent } from 'angular2-meteor';
-import template from './products-list.component.html';
+import {Component, ChangeDetectionStrategy, OnInit, OnDestroy} from "@angular/core";
+import {MeteorComponent} from "angular2-meteor";
+import template from "./products-list.component.html";
 import {ProductsService} from "./products.service";
 import {Product} from "../../../both/models/product-object";
-import {ProductsState} from "./products.reducer";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {ProductsActions} from "./products.actions";
-import {OnInit, OnDestroy} from "@angular/core";
 
 @Component({
   selector: 'products',
@@ -16,26 +14,28 @@ import {OnInit, OnDestroy} from "@angular/core";
   providers: [ProductsService]
 })
 export class ProductsListComponent extends MeteorComponent implements OnInit, OnDestroy {
-  private products$ : Observable<Product>;
+  private products$:Observable<Product>;
 
-  constructor(public _store : Store<ProductsState>) {
+  constructor(public _store:Store<any>) {
     super();
 
     this.products$ = this._store.select("products");
   }
 
   ngOnInit() {
-    this._store.dispatch({ type: ProductsActions.SUBSCRIBE_PRODUCTS});
+    this._store.dispatch({type: ProductsActions.SUBSCRIBE_PRODUCTS});
   }
 
-  add() {
-    let product = <Product>{
-      name: "Test new " + Date.now()
-    };
-    this._store.dispatch({type: ProductsActions.INSERT_PRODUCT,payload: product});
+  add(product:Product) {
+    this._store.dispatch({type: ProductsActions.INSERT_PRODUCT, payload: product});
   }
+
+  remove(productId:string) {
+    this._store.dispatch({type: ProductsActions.REMOVE_PRODUCT, payload: productId});
+  }
+
   addBadProduct() {
-    let invalidProduct = {name:3};
+    let invalidProduct = {name: 3};
     this._store.dispatch({type: ProductsActions.INSERT_PRODUCT, payload: invalidProduct});
   }
 
@@ -44,6 +44,6 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
   }
 
   unsubscribe() {
-    this._store.dispatch({ type: ProductsActions.UNSUBSCRIBE_PRODUCTS});
+    this._store.dispatch({type: ProductsActions.UNSUBSCRIBE_PRODUCTS});
   }
 }

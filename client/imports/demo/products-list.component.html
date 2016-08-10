@@ -1,8 +1,10 @@
+new product: <input #productName type="text">
 <ul>
     <li *ngFor="let product of products$ | async">
         {{product.name}}
+        <button (click)="remove(product._id)">X</button>
     </li>
 </ul>
-<button (click)="add()">Add</button>
-<button (click)="addBadProduct()">Add bad product</button>
+<button (click)="add({name:productName.value})">Add</button>
+<button (click)="addBadProduct()">add bad product</button>
 <button (click)="unsubscribe()">Unsubscribe</button>

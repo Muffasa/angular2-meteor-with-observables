@@ -26,14 +26,22 @@ export class ProductsEffects {
       return Observable.of({type: ProductsActions.PRODUCTS_UNSUBSCRIBED});
     });
 
-  @Effect() loadProducts$ =  this.productsService.getProducts()
+  @Effect() syncProducts$ =  this.productsService.getProducts()
     .map(products => ({type: ProductsActions.PRODUCTS_SYNCED, payload: products}));
 
-  @Effect() addProduct$ = this.updates$
+  @Effect() insertProduct$ = this.updates$
     .whenAction(ProductsActions.INSERT_PRODUCT)
     .map(toPayload)
     .switchMap((product: Product) => this.productsService.insertProduct(product)
       .map(productId => ({type: ProductsActions.INSERT_PRODUCT_SUCCESS, payload: productId}))
       .catch(e => (Observable.of({ type: ProductsActions.INSERT_PRODUCT_FAIL, payload: e })))
     );
+    @Effect() removeProduct$ = this.updates$
+        .whenAction(ProductsActions.REMOVE_PRODUCT)
+        .map(toPayload)
+        .switchMap((productId: string) => this.productsService.removeProduct(productId)
+         .map(productId => ({type: ProductsActions.REMOVE_PRODUCT_SUCCESS, payload: productId}))
+         .catch(e => (Observable.of({ type: ProductsActions.REMOVE_PRODUCT_FAIL, payload: e })))
+        );
+
 }
