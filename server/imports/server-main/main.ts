@@ -13,7 +13,14 @@ export class Main {
     });
 
     Meteor.methods({
-      addProduct: (product) => {
+      insertProduct: function (product) {
+        // TODO: implement check for interfaces
+        // example : check(product, Product)
+        check(product.name, String);
+
+        if (!product.name)
+          throw new Meteor.Error("product name can't be empty");
+
         return ProductsCollection.insert(product);
       }
     })

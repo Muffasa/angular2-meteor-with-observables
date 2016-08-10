@@ -32,7 +32,7 @@ export class ProductsEffects {
   @Effect() addProduct$ = this.updates$
     .whenAction(ProductsActions.INSERT_PRODUCT)
     .map(toPayload)
-    .switchMap((product: Product) => this.productsService.addProduct(product)
+    .switchMap((product: Product) => this.productsService.insertProduct(product)
       .map(productId => ({type: ProductsActions.INSERT_PRODUCT_SUCCESS, payload: productId}))
       .catch(e => (Observable.of({ type: ProductsActions.INSERT_PRODUCT_FAIL, payload: e })))
     );

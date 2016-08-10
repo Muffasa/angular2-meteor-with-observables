@@ -24,12 +24,19 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
     this.products$ = this._store.select("products");
   }
 
-  a() {
-
-  }
-
   ngOnInit() {
     this._store.dispatch({ type: ProductsActions.SUBSCRIBE_PRODUCTS});
+  }
+
+  add() {
+    let product = <Product>{
+      name: "Test new " + Date.now()
+    };
+    this._store.dispatch({type: ProductsActions.INSERT_PRODUCT,payload: product});
+  }
+  addBadProduct() {
+    let invalidProduct = {name:3};
+    this._store.dispatch({type: ProductsActions.INSERT_PRODUCT, payload: invalidProduct});
   }
 
   ngOnDestroy() {
@@ -38,16 +45,5 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
 
   unsubscribe() {
     this._store.dispatch({ type: ProductsActions.UNSUBSCRIBE_PRODUCTS});
-  }
-
-  add() {
-    let product = <Product>{
-      name: "Test new " + Date.now()
-    };
-
-    this._store.dispatch({
-      type: ProductsActions.INSERT_PRODUCT,
-      payload: product
-    });
   }
 }
