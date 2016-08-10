@@ -1,26 +1,25 @@
-import {bootstrap} from 'angular2-meteor-auto-bootstrap';
-import {AppComponent} from './app.component';
-import {productsReducer} from "./imports/demo/products.reducer";
-import {combineReducers, provideStore} from "@ngrx/store";
-import {storeLogger} from 'ngrx-store-logger';
-import {compose} from '@ngrx/core/compose';
+import {bootstrap} from "angular2-meteor-auto-bootstrap";
+
+import {AppComponent} from "./app.component";
+import {provideStore} from "@ngrx/store";
 import {runEffects} from "@ngrx/effects";
-import {ProductsEffects} from "./imports/demo/products.effects";
+import {productsReducer} from "./imports/demo/products.reducer";
 import {ProductsService} from "./imports/demo/products.service";
+import {ProductsEffects} from "./imports/demo/products.effects";
+import {instrumentStore} from "@ngrx/store-devtools";
+import { useLogMonitor } from '@ngrx/store-log-monitor';
 
 bootstrap(AppComponent, [
-  ProductsService,
-  provideStore(compose(
-    storeLogger({
-      collapsed: true,
-      duration: true,
-      timestamp: true
+    ProductsService,
+    provideStore({products: productsReducer}),
+    instrumentStore({
+        monitor: useLogMonitor({
+            // Default log monitor options
+            position: 'right',
+            visible: true,
+            size: 0.3
+        }),
     }),
-    combineReducers
-  )({
-    products: productsReducer
-  })),
-  runEffects(
-    ProductsEffects
-  )
-]);
+    runEffects(ProductsEffects)
+
+]).catch(err => console.error(err));
