@@ -16,12 +16,12 @@ import {OnInit, OnDestroy} from "@angular/core";
   providers: [ProductsService]
 })
 export class ProductsListComponent extends MeteorComponent implements OnInit, OnDestroy {
-  private productsStore : Observable<any>;
+  private products$ : Observable<Product>;
 
   constructor(public _store : Store<ProductsState>) {
     super();
 
-    this.productsStore = this._store.select("products");
+    this.products$ = this._store.select("products");
   }
 
   a() {

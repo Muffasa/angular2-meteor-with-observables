@@ -1,6 +1,6 @@
 <ul>
-    <li *ngFor="let item of (productsStore | async)?.products">
-        {{item.name}}
+    <li *ngFor="let product of products$ | async">
+        {{product.name}}
     </li>
 </ul>
 <button (click)="add()">Add</button>
