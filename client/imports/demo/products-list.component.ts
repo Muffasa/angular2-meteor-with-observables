@@ -15,6 +15,7 @@ import {ProductsActions} from "./products.actions";
 })
 export class ProductsListComponent extends MeteorComponent implements OnInit, OnDestroy {
   private products$:Observable<Product>;
+  private editMode;
 
   constructor(public _store:Store<any>) {
     super();
@@ -28,6 +29,11 @@ export class ProductsListComponent extends MeteorComponent implements OnInit, On
 
   add(product:Product) {
     this._store.dispatch({type: ProductsActions.INSERT_PRODUCT, payload: product});
+  }
+
+  update(product:Product) {
+    this._store.dispatch({type: ProductsActions.UPDATE_PRODUCT, payload: product});
+    this.editMode = "";
   }
 
   remove(productId:string) {

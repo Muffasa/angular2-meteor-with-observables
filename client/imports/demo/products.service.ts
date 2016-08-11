@@ -28,7 +28,9 @@ export class ProductsService {
   public insertProduct(product : Product) {
     return MeteorObservable.call("insertProduct", product);
   }
-
+  public updateProduct(product : Product) {
+    return MeteorObservable.call("updateProduct", product);
+  }
   public removeProduct(productId : string) {
     return MeteorObservable.call("removeProduct", productId);
   }

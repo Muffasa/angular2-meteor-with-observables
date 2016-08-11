@@ -1,4 +1,3 @@
-import {ProductsState} from "./products.reducer";
 import {StateUpdates, Effect, toPayload} from "@ngrx/effects";
 import {Injectable} from "@angular/core";
 import {ProductsService} from "./products.service";
@@ -8,7 +7,7 @@ import {Observable} from "rxjs/Rx";
 
 @Injectable()
 export class ProductsEffects {
-  constructor(private updates$:StateUpdates<ProductsState>, private productsService:ProductsService) {
+  constructor(private updates$:StateUpdates<any>, private productsService:ProductsService) {
 
   }
 
@@ -43,5 +42,17 @@ export class ProductsEffects {
          .map(productId => ({type: ProductsActions.REMOVE_PRODUCT_SUCCESS, payload: productId}))
          .catch(e => (Observable.of({ type: ProductsActions.REMOVE_PRODUCT_FAIL, payload: e })))
         );
+    @Effect() updateProduct$ = this.updates$
+       .whenAction(ProductsActions.UPDATE_PRODUCT)
+       .map(toPayload)
+       .switchMap((product: Product) => this.productsService.updateProduct(product)
+         .map(response => {
+             console.log(`update response. response:${response}`);
+            if(response.err)
+                return ({type: ProductsActions.UPDATE_PRODUCT_FAIL, payload: response.origin});
 
+             return ({type: ProductsActions.UPDATE_PRODUCT_SUCCESS})
+         })
+         .catch(e => (Observable.of({ type: ProductsActions.UPDATE_PRODUCT_FAIL, payload: e })))
+       );
 }

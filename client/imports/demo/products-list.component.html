@@ -1,8 +1,11 @@
+
 new product: <input #productName type="text">
 <ul>
     <li *ngFor="let product of products$ | async">
-        {{product.name}}
+        <input type="text" [(ngModel)]="product.name" [disabled]="editMode !== product._id">
         <button (click)="remove(product._id)">X</button>
+        <button *ngIf="editMode !== product._id" (click)="editMode = product._id">edit</button>
+        <button *ngIf="editMode === product._id" (click)="update(product)">save</button>
     </li>
 </ul>
 <button (click)="add({name:productName.value})">Add</button>
