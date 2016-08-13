@@ -19,11 +19,8 @@ export class ProductsEffects {
 
   @Effect() unsubscribeProducts$ = this.updates$
     .whenAction(ProductsActions.CALL_UNSUBSCRIBE_PRODUCTS)
-    .switchMap(() => {
-      this.productsService.unsubscribeProducts();
-
-      return Observable.of({type: ProductsActions.PRODUCTS_COLLECTION_UPDATED});
-    });
+    .do(() => this.productsService.unsubscribeProducts())
+    .ignoreElements();
 
   @Effect() loadProducts$ = this.updates$
     .whenAction(ProductsActions.LOAD_PRODUCTS_FROM_COLLECTION)
