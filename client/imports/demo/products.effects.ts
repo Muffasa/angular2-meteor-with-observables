@@ -19,11 +19,8 @@ export class ProductsEffects {
 
   @Effect() unsubscribeProducts$ = this.updates$
     .whenAction(ProductsActions.UNSUBSCRIBE_PRODUCTS)
-    .switchMap(() => {
-      this.productsService.unsubscribeProducts();
-
-      return Observable.of({type: ProductsActions.PRODUCTS_UNSUBSCRIBED});
-    });
+    .do(() => this.productsService.unsubscribeProducts())
+    .ignoreElements();
 
   @Effect() syncProducts$ =  this.productsService.getProducts()
     .map(products => ({type: ProductsActions.PRODUCTS_SYNCED, payload: products}));
